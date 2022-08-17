@@ -1,0 +1,48 @@
+.custom_input .ant-form-item-row{
+    display: block;
+}
+.custom_input .ant-form-item-required::before{
+    visibility: hidden;
+    margin-right: 0px;
+}
+
+.custom_input .ant-input{
+    padding: 6px 10px;
+}
+
+.custom_input .ant-input-affix-wrapper{
+    padding: 6px 10px;
+}
+.custom_checkbox .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #E0FFFF;
+    border-color: #1890ff;
+    border-radius: 6px;
+}
+.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+}
+.custom_checkbox .ant-checkbox-inner{
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+ }
+.custom_checkbox .ant-checkbox-checked .ant-checkbox-inner:after {
+    border: 1px solid #1890ff;
+    border-top: 0;
+    border-left: 0;
+}
+.custom_login__btn .ant-btn{
+    background-color: #6534D9;
+    border-radius: 30px;
+    padding: 8px 30px;
+    color: #fff;
+    border: 0;
+}
+.ant-btn{
+height: 100%;
+}
+.custom_login__btn .ant-form-item-control{
+    display: flex;
+    align-items: center;
+}
