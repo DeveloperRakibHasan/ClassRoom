@@ -1,0 +1,12 @@
+.ant-layout-header{
+   background: none;
+}
+.ant-layout-sider{
+   background: #fff;
+}
+.ant-layout{
+   background: transparent;
+}
+.ant-menu{
+   height: 100vh
+}

@@ -101,30 +101,6 @@ function Signup() {
                         <Input 
                         placeholder="email" />
                         </Form.Item>
-                        {/* <Form.Item 
-                        className="signup_input" 
-                        name="number"
-                        rules={[
-                            { required: true, message: 'Enter your Number' },
-                            ]}
-                        >
-                        <Input
-                            type="number"
-                            // onChange={handleChange}
-                            placeholder="type your phone number"
-                            maxLength={11}
-                        />
-                        </Form.Item> */}
-                        {/* <Form.Item 
-                        className="signup_input" 
-                        name="institute"
-                        rules={[
-                            { required: true, message: 'Enter your institute name' },
-                            ]}
-                        >
-                        <Input
-                         placeholder="type your institute name" />
-                        </Form.Item> */}
                         <Form.Item 
                         className="signup_input" 
                         name='password'
@@ -141,15 +117,15 @@ function Signup() {
                         name='confirmPassword'
                         rules={[
                             { required: true, message: 'Enter your confirmPassword' },
-                            // ({getFildValue})=>({
-                            //     validator(_,value){
-                            //         if(!value || getFildValue('password') === value){
-                            //             return Promise.resolve()
-                            //         }
-                            //         return Promise.reject("Password do not match")
+                            ({getFildValue})=>({
+                                validator(_,value){
+                                    if(!value || getFildValue('password ') === value){
+                                        return Promise.resolve()
+                                    }
+                                    return Promise.reject("Password do not match")
                                      
-                            //     }
-                            // })
+                                }
+                            })
                             ]}
                         >
                             <Input.Password
@@ -237,16 +213,6 @@ function Signup() {
                             maxLength={11}
                         />
                         </Form.Item>
-                        {/* <Form.Item 
-                        className="signup_input" 
-                        name="institute"
-                        rules={[
-                            { required: true, message: 'Enter your institute name' },
-                            ]}
-                        >
-                        <Input
-                         placeholder="type your institute name" />
-                        </Form.Item> */}
 
                         <Select
                             className="signup_select"
@@ -316,7 +282,7 @@ function Signup() {
                     </div>
                     </TabPane>
                 </Tabs>
-                <p>Already you have an account Please! <Link to="/login">Login</Link></p>
+                <p>Already you have an account Please! <Link to="/">Login</Link></p>
             </div>
         </div>
     </div>
