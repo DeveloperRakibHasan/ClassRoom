@@ -32,7 +32,7 @@ function AddClass() {
                                 </Form.Item>
 
                                 <Form.Item>
-                                    <DatePicker />
+                                    <DatePicker className='custom_datepiker' />
                                 </Form.Item>
                                 </div>
                                 <div className='mb-4'><Input placeholder="Title" /></div>

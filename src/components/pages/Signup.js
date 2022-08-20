@@ -96,7 +96,7 @@ function Signup() {
                         </Form.Item>
 
                         {/* password input  */}
-                        <Form.Item 
+                        <Form.Item
                         className="signup_input" 
                         name='password'
                         rules={[
@@ -126,6 +126,7 @@ function Signup() {
                                 },
                             }),
                             ]}
+                            // hasFeedback
                         >
                             <Input.Password
                             className='signup_input__password'
