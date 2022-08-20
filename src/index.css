@@ -4,6 +4,33 @@
 
 @layer components{
 
+    /* width */
+    ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #A3E7E4; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #83E1D8; 
+  }
+
+.long{
+    height: 100vh;
+    margin-top: 50px;
+}
+.body_content{
+  padding: 40px
+}
 .box-shadow{
     box-shadow: 0px 40px 80px rgba(0, 48, 119, 0.15);
     border-radius: 15px;
@@ -11,4 +38,13 @@
 .navmenu{
  @apply  flex gap-1 items-center text-gray-400
 }
+.main-content{@apply ml-[200px] pt-[50px]}
+
+.profile_ul li{
+  @apply mb-3
+}
+.card_bg{
+ @apply w-full h-full bg-white shadow-sm rounded-2xl p-6
+}
+
 }

@@ -7,16 +7,18 @@ const Nav = () => {
 
   return (
         <>
-       <div className='flex items-center justify-between shadow-md bg-white w-full h-[50px] px-10'>
+       <div className='flex fixed items-center z-50 justify-between border-b bg-white w-full h-[50px] px-10'>
          <div className='flex gap-20'>
+         <span className=' cursor-pointer'>cROOM</span>
             <ul className='flex gap-6 mb-0'>
-                <NavLink className='navmenu' exact to="/dashboard">Home</NavLink>
-                <NavLink className='navmenu' exact to="/profile">Profile</NavLink>
-                <NavLink className='navmenu' exact to="/task">Task</NavLink>
+                <NavLink className='navmenu' to="/dashboard">Home</NavLink>
+                <NavLink className='navmenu' to="/profile">Profile</NavLink>
+                <NavLink className='navmenu' to="/task">Task</NavLink>
             </ul>
          </div>
-            <div>
+            <div className='flex gap-3'>
                 <span>user_name</span>
+                <NavLink to="/">Logout</NavLink>
             </div>
         </div>
         </>
