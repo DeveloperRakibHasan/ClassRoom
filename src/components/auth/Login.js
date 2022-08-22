@@ -4,12 +4,33 @@ import '../css/input.css'
 import { Button, Checkbox, Form, Input } from 'antd';
 import LoginBG from '../../assets/img/login_bg.jpg'
 import Navbar from '../Navbar';
+import AuthUser from './AuthUser';
 
 
 function login() {
+  const { httpurl, setToken } = AuthUser();
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const onFinish = async (values) => {
+    // console.log('Success:', values);
+
+     values = {
+			email:values.email,
+			password:values.password
+		}
+
+		httpurl.post('/', values).then((res) => {
+		// console.log(res);
+		// console.log(res.data);
+		// console.log(res.data.user);
+		if(res.data.status === 404) {
+      console.log(res.data.status)
+    }
+    else {
+      setToken(res.data, res.user);
+      // console.log(res.data.access_token)
+    }
+		})
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -35,14 +56,17 @@ function login() {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             className="custom_input"
             rules={[
               {
                 required: true,
-                message: 'Please input your username!',
+                message: 'Please input your email!',
               },
+              {
+                type: 'email'
+              }
             ]}
           >
             <Input />

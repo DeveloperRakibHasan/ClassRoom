@@ -4,31 +4,37 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Login from './components/pages/Login';
-import Signup from './components/pages/Signup';
-import TeacherProfile from './components/pages/TeacherProfile';
-import DashBoard from './components/pages/DashBoard';
-import StudentProfile from './components/pages/StudentProfile';
+
 import Nav from './components/Nav';
 import SiteMenu from './components/SiteMenu';
-import Chat from './components/pages/Chat';
-import Calender from './components/pages/Calender';
-import RequestClass from './components/pages/RequestClass';
+import Login from './components/auth/Login';
+import DashBoard from './components/pages/student/DashBoard';
+import Signup from './components/auth/Signup';
+import TeacherProfile from './components/pages/teacher/TeacherProfile';
+import StudentProfile from './components/pages/student/StudentProfile';
+import Chat from './components/pages/student/Chat';
+import Calender from './components/pages/student/Calender';
+import RequestClass from './components/pages/student/RequestClass';
+import TeacherDashboard from './components/pages/teacher/TeacherDashboard';
+import EditTeacherProfile from './components/pages/teacher/EditTeacherProfile';
+
 
 function App() {
   return (
     <BrowserRouter>
-      <Nav/>
-      <SiteMenu/>
+   <Nav/>
+    <SiteMenu/>
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/signup" element={<Signup />}/>
-        <Route path="/techer_profile" element={<TeacherProfile />}/>
+        <Route path="/teacher_profile" element={<TeacherProfile />}/>
         <Route path="/profile" element={<StudentProfile />}/>
         <Route path="/dashboard" element={<DashBoard />}/>
+        <Route path="/teacher_dashboard" element={<TeacherDashboard />}/>
         <Route path="/chat" element={<Chat />}/>
         <Route path="/req_class" element={<RequestClass />}/>
         <Route path="/calender" element={<Calender />}/>
+        <Route path="/edit_teacher_profile" element={<EditTeacherProfile />}/>
 
       </Routes>
     </BrowserRouter>      

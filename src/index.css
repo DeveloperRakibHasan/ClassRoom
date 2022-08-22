@@ -6,7 +6,7 @@
 
     /* width */
     ::-webkit-scrollbar {
-    width: 5px;
+    width: 1px;
   }
   
   /* Track */
@@ -22,6 +22,9 @@
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #83E1D8; 
+  }
+  h2{
+  @apply text-[18px]
   }
 
 .long{
@@ -46,5 +49,6 @@
 .card_bg{
  @apply w-full h-full bg-white shadow-sm rounded-2xl p-6
 }
+
 
 }

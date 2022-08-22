@@ -1,5 +1,5 @@
 import React from 'react'
-import AddClass from '../class_request/AddClass';
+import AddClass from '../../class_request/AddClass';
 
 function RequestClass() {
   return (

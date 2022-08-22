@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios'
 import 'antd/dist/antd.min.css'
 import '../css/signup_input.css'
 import { Tabs, Input, Tooltip, Button, Form, Select  } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import LoginBG from '../../assets/img/login_bg.jpg'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const { TabPane } = Tabs;
 
@@ -20,9 +21,29 @@ const onChange = (key) => {
   };
 
 function Signup() {
+    const [loading, setLoading] = useState(false);
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    let history = useNavigate()
+
+    const onFinish = async (values) => {
+        values = {
+            name: values.name,
+            username: values.username,
+            email: values.email,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+        }
+        // console.log('Success:', values);
+
+       const res = await axios.post('http://127.0.0.1:8000/api/studentregister', values)
+        if(res.data.status === 401) {
+            setLoading(false);
+        } else {
+            
+            history('/dashboard')
+            setLoading(true);
+        }
+        
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -45,7 +66,7 @@ function Signup() {
                     autoComplete="off" 
                     >
 
-                   <div className='flex gap-4 justify-between'>
+                   <div className='flex'>
                         {/* name input  */}
                         <Form.Item 
                             className="signup_input" 
@@ -60,13 +81,13 @@ function Signup() {
                         </Form.Item>
 
                         {/* username input */}
-                        <Form.Item 
+                        {/* <Form.Item 
                         className="signup_input" 
-                    name="username"
-                    rules={[
-                            { required: true, message: 'User_name is required.' },
-                        ]}
-                    >
+                        name="username"
+                        rules={[
+                                { required: true, message: 'User_name is required.' },
+                            ]}
+                        >
                         <Input
                             placeholder="Enter your username"
                             prefix={<UserOutlined className="site-form-item-icon" />}
@@ -80,15 +101,15 @@ function Signup() {
                             </Tooltip>
                             }
                             />
-                        </Form.Item>
+                        </Form.Item> */}
                     </div>
                         {/* email input  */}
                         <Form.Item 
                         className="signup_input" 
                         name="email"
                         rules={[
-                            { required: true, message: 'E-mail is required.' },
-                            { type: 'email', message: 'E-mail must be valid.' },
+                                { required: true, message: 'E-mail is required.' },
+                                { type: 'email', message: 'E-mail must be valid.' },
                             ]}
                         >
                         <Input 
@@ -139,7 +160,7 @@ function Signup() {
                         <Form.Item
                         className="custom_login__btn">
                             <Button htmlType="submit">
-                            Signup
+                            {loading ? <span>loading...</span> : <span>Signup</span>}
                             </Button>
                         </Form.Item>
 

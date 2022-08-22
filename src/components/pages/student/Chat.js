@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatBody from '../chat_app/ChatBody'
+import ChatBody from '../../chat_app/ChatBody'
 
 const Chat = () => {
   return (

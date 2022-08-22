@@ -1,0 +1,11 @@
+
+.teacher_profile__list li{
+    margin-bottom: 12px;
+    font-weight: 700;
+    color:  #8c8c8c;
+}
+
+.teacher_profile__list li span{
+    color: #999999;
+    font-weight: 400;
+}

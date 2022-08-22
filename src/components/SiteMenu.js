@@ -5,6 +5,10 @@ import './css/side_menu.css'
 
 
 function SiteMenu() {
+  let activeStyle = {
+    color: '#000'
+  };
+
 
   return (
      <>
@@ -12,13 +16,33 @@ function SiteMenu() {
         <div className='w-[200px] bg-white overflow-auto'>
           <nav>
             <ul className='pt-10'>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/dashboard">DashBoard</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/profile">Profile</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/task">Task</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/chat">Chat</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/calender">Calender</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/req_class">Request Class</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/">Log Out</NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/dashboard" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>
+              DashBoard
+            </NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/teacher_dashboard" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>
+              TeacherDashBoard
+            </NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/teacher_profile" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>
+              TeacherProfile
+            </NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/profile" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>Profile</NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/chat" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>Chat</NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/calender" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>Calender</NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>Log Out</NavLink>
             </ul>
           </nav>
         </div>
