@@ -13,10 +13,10 @@ function SiteMenu() {
   return (
      <>
        <div className='fixed long border-r '>
-        <div className='w-[200px] bg-white overflow-auto'>
+        <div className='w-[200px] bg-white h-screen overflow-auto'>
           <nav>
             <ul className='pt-10'>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/dashboard" 
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/" 
              style={({ isActive }) =>
               isActive ? activeStyle : undefined}>
               DashBoard
@@ -25,6 +25,11 @@ function SiteMenu() {
              style={({ isActive }) =>
               isActive ? activeStyle : undefined}>
               TeacherDashBoard
+            </NavLink>
+            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/timeline" 
+             style={({ isActive }) =>
+              isActive ? activeStyle : undefined}>
+              Timeline
             </NavLink>
             <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/teacher_profile" 
              style={({ isActive }) =>
@@ -40,9 +45,6 @@ function SiteMenu() {
             <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/calender" 
              style={({ isActive }) =>
               isActive ? activeStyle : undefined}>Calender</NavLink>
-            <NavLink className="block pl-10 mb-2 py-2 text-gray-300" to="/" 
-             style={({ isActive }) =>
-              isActive ? activeStyle : undefined}>Log Out</NavLink>
             </ul>
           </nav>
         </div>

@@ -4,7 +4,6 @@ import AuthUser from './AuthUser';
 
 export default function PrivetRoute({ children }) {
     const { getToken } = AuthUser();
-    // console.log(getToken());
 
-    return getToken() ? (children) : (<Navigate to="/login" />);
+    return getToken() ? (children) : (<Navigate to="/login" />)
 }

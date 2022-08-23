@@ -5,9 +5,14 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import LoginBG from '../../assets/img/login_bg.jpg'
 import Navbar from '../Navbar';
 import AuthUser from './AuthUser';
+import { useNavigate } from "react-router-dom";
 
 
 function login() {
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = useNavigate();
+
   const { httpurl, setToken } = AuthUser();
 
   const onFinish = async (values) => {
@@ -18,16 +23,33 @@ function login() {
 			password:values.password
 		}
 
-		httpurl.post('/', values).then((res) => {
+    // STUDENT LOGIN  
+		httpurl.post('/studentlog', values).then((res) => {
+		console.log(res);
+		console.log(res.data);
+		// console.log(res.data.user);
+		if(res.data.status === 404) {
+      // console.log(res.data.status)
+    }
+    else {
+      setToken(res.data, res.user);
+      // console.log(res.user)
+      navigate('/');
+    }
+		})
+
+    // TEACHER LOGIN 
+		httpurl.post('/teacherlog', values).then((res) => {
 		// console.log(res);
 		// console.log(res.data);
 		// console.log(res.data.user);
 		if(res.data.status === 404) {
-      console.log(res.data.status)
+      // console.log(res.data.status)
     }
     else {
       setToken(res.data, res.user);
       // console.log(res.data.access_token)
+      navigate('/teacher_dashboard');
     }
 		})
 
@@ -38,7 +60,8 @@ function login() {
   };
 
   return (
-    <div className=' w-full mx-auto h-screen flex items-center bg-no-repeat bg-cover bg-center' style={{backgroundImage: `url(${LoginBG})`}}>
+    <>
+     <div className=' w-full mx-auto h-screen flex items-center bg-no-repeat bg-cover bg-center' style={{backgroundImage: `url(${LoginBG})`}}>
       <div className='container'>
       <Navbar />
        <div className='w-[450px] mx-auto bg-white px-14 py-[60px] rounded-3xl shadow-md'>
@@ -106,6 +129,8 @@ function login() {
        </div>
       </div>
     </div>
+    </>
+    
   )
 }
 

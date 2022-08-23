@@ -8,7 +8,7 @@ const DashBoard = () => {
 
   return (
         <>
-        <div className='main-content bg-slate-50'>
+        <div className='main-content bg-slate-50 h-screen'>
           <div className='body_content'>
             <div className='grid grid-flow-row grid-cols-3 gap-6'>
               <div className='card_bg flex justify-center items-center'>

@@ -32,54 +32,67 @@ function EditTeacherProfile() {
       };
 
   return (
-    <div className='main-content bg-slate-50'>
+    <div className='main-content bg-slate-50 h-screen overflow-auto'>
         <div className='body-content p-10'>
             <NavLink to='/teacher_profile' className='pb-2 px-4 border-b'>Back</NavLink>
             <div className='mt-20'>
             <Form {...layout}  className='grid grid-flow-row grid-cols-3' name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                 <Form.Item
-                    name={['user', 'name']}>
-                    <Input placeholder='type your name' />
+                  name={['user', 'name']}>
+                  <Input placeholder='type your name' />
                 </Form.Item>
 
                 <Form.Item
                     name={['user', 'email']}
-                    label="Email"
                     rules={[
                     {
-                        type: 'email',
+                      type: 'email',
                     },
-                    ]}
-                >
-                    <Input />
+                    ]}>
+                  <Input placeholder='type your email' />
                 </Form.Item>
                 
-                <Form.Item name={['user', 'website']} label="Website">
-                    <Input />
+                <Form.Item name={['user', 'website']}>
+                  <Input placeholder='type your website'/>
                 </Form.Item>
 
-                <Form.Item name={['user', 'gender']} 
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Your Gender!',
-                        },
-                        ]}>
-                        <Select  placeholder='Select gender'>
-                        <Select.Option name='male' value="male">Male</Select.Option>
-                        <Select.Option name='female' value="female">Female</Select.Option>
-                        <Select.Option name='others' value="others">Others</Select.Option>
-                        </Select>
-                    </Form.Item>
+                <Form.Item name={['user', 'gender']}>
+                  <Select  placeholder='Select gender'>
+                  <Select.Option name='male' value="male">Male</Select.Option>
+                  <Select.Option name='female' value="female">Female</Select.Option>
+                  <Select.Option name='others' value="others">Others</Select.Option>
+                  </Select>
+                </Form.Item>
 
-                <Form.Item name={['user', 'introduction']} label="Introduction">
-                    <Input.TextArea />
+                <Form.Item
+                  name={['user', 'religion']}>
+                  <Input placeholder='type your religion' />
+                </Form.Item>
+
+                <Form.Item name={['user', 'subject']}>
+                  <Select  placeholder='Select Subject'>
+                  <Select.Option name='math' value="math">Math</Select.Option>
+                  <Select.Option name='english' value="english">English</Select.Option>
+                  <Select.Option name='bangla' value="bangla">Bangla</Select.Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name={['user', 'address']}>
+                  <Input placeholder='type your address' />
+                </Form.Item>
+
+                <Form.Item
+                  name={['user', 'phone']}>
+                  <Input placeholder='type your phone' />
+                </Form.Item>
+
+                <Form.Item name={['user', 'introduction']}>
+                    <Input.TextArea placeholder='type your introduction' />
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit">
-                    Submit
-                    </Button>
+                    <Button type="primary" htmlType="submit">Submit</Button>
                 </Form.Item>
 
                 </Form>
