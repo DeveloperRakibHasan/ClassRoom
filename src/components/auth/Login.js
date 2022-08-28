@@ -6,52 +6,39 @@ import LoginBG from '../../assets/img/login_bg.jpg'
 import Navbar from '../Navbar';
 import AuthUser from './AuthUser';
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function login() {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
-
   const { httpurl, setToken } = AuthUser();
 
   const onFinish = async (values) => {
-    // console.log('Success:', values);
-
      values = {
 			email:values.email,
 			password:values.password
 		}
-
     // STUDENT LOGIN  
-		httpurl.post('/studentlog', values).then((res) => {
-		console.log(res);
-		console.log(res.data);
-		// console.log(res.data.user);
-		if(res.data.status === 404) {
-      // console.log(res.data.status)
-    }
-    else {
-      setToken(res.data, res.user);
-      // console.log(res.user)
-      navigate('/');
-    }
+		await httpurl.post('login', values)
+    .then((res) => {
+      // console.log(res.data.data.name);
+        setToken(res.data.token, res.data.data);
+        navigate('/');
 		})
-
-    // TEACHER LOGIN 
-		httpurl.post('/teacherlog', values).then((res) => {
-		// console.log(res);
-		// console.log(res.data);
-		// console.log(res.data.user);
-		if(res.data.status === 404) {
-      // console.log(res.data.status)
-    }
-    else {
-      setToken(res.data, res.user);
-      // console.log(res.data.access_token)
-      navigate('/teacher_dashboard');
-    }
-		})
+    .catch((err) =>{
+      console.log(err);
+      toast.error('Login faild!', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        })
+    })
 
   };
 
@@ -128,6 +115,7 @@ function login() {
         </Form>
        </div>
       </div>
+      <ToastContainer />
     </div>
     </>
     

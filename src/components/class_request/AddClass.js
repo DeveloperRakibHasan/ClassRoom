@@ -1,13 +1,43 @@
 import React, {useState} from 'react'
 import { Input,  DatePicker, Select, Form, Upload, TimePicker, Button } from 'antd';
-// import { PlusOutlined } from '@ant-design/icons';
 import '../css/class_request.css'
+import AuthUser from '../auth/AuthUser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddClass() {
+    const {httpurl} = AuthUser();
 
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (value) => {
+        value = {
+            subject: value.subject,
+            title: value.title,
+            description: value.description,
+            date: value.date,
+            status: 0,
+        }
+        httpurl.post('problems', value)
+        .then((res) => {
+            toast.success('Successfull Create.', {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+        })
+        .catch((err) => {
+            toast.error('OOps! No create request', {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+        })
+        // console.log(value)
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -63,21 +93,21 @@ function AddClass() {
                                 onFinishFailed={onFinishFailed}
                                 >
                                 <div className='w-full grid grid-flow-row grid-cols-3 gap-4 mb-4'>
-                                <Form.Item name='select-subject' 
+                                <Form.Item name='subject' 
                                 rules={[
                                     {
                                         required: true,
                                         message: 'choce your subject!',
                                     },
                                     ]}>
-                                    <Select  placeholder='Select Subject'>
+                                    <Select name="subject" placeholder='Select Subject'>
                                     <Select.Option name='math' value="math">Math</Select.Option>
                                     <Select.Option name='english' value="english">English</Select.Option>
                                     <Select.Option name='bangla' value="bangla">Bangla</Select.Option>
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item  name='date-picker' 
+                                <Form.Item  name='date' 
                                 rules={[
                                     {
                                         required: true,
@@ -102,7 +132,7 @@ function AddClass() {
                                     </Form.Item>
                                 </div>
 
-                                <Form.Item name='details'>
+                                <Form.Item name='description'>
                                 <Input.TextArea placeholder="Description.."  style={{
                                     resize: "none",
                                     height: 100,
@@ -140,6 +170,7 @@ function AddClass() {
                                    </div> 
                                 </div>
                                 </Form>
+                                <ToastContainer/>
                             </div>
                         </div>
                     </div>

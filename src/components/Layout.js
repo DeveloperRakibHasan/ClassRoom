@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import Nav from "./Nav";
+import SiteMenu from './SiteMenu'
 
-const Layout = ({children}) => {
+function Layout({ children }) {
+  const roll = 'student';
   return (
     <>
-    {children}
+      <Nav/>
+      <SiteMenu roll={roll} />
+      <div>{children}</div>
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

@@ -6,8 +6,10 @@ import { Tabs, Input, Button, Form  } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import LoginBG from '../../assets/img/login_bg.jpg'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useNavigate,} from 'react-router-dom'
 import TeacherSignup from './TeacherSignup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { TabPane } = Tabs;
 
@@ -15,14 +17,10 @@ const onChange = (key) => {
     console.log(key);
   };
 
-//   const { Option } = Select;
-
-//   const handleChange = (value) => {
-//     console.log(`selected ${value}`);
-//   };
-
 function Signup() {
     const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState()
+    // const [success, setSuccess] = useState()
 
     let history = useNavigate()
 
@@ -35,16 +33,36 @@ function Signup() {
             confirmPassword: values.confirmPassword,
         }
         // console.log('Success:', values);
-
-       const res = await axios.post('http://127.0.0.1:8000/api/studentregister', values)
-        if(res.data.status === 401) {
-            setLoading(false);
-        } else {
+        setLoading(false)
+   await axios.post('http://127.0.0.1:8000/api/studentregister', values)
+       .then((res) => {
+        setLoading(true)
+        toast.success('Successfull Registaction! plz login', {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
             
-            history('/')
-            setLoading(true);
-        }
-        
+             setTimeout(()=>{
+                history('/login')
+             }, 2000)
+       })
+       .catch((err) => {
+            console.log(err);
+            setLoading(false)
+            toast.error('Email is already exists', {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+       })   
+
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -67,7 +85,6 @@ function Signup() {
                     autoComplete="off" 
                     >
 
-                   <div className='flex'>
                         {/* name input  */}
                         <Form.Item 
                             className="signup_input" 
@@ -81,29 +98,6 @@ function Signup() {
                                 />
                         </Form.Item>
 
-                        {/* username input */}
-                        {/* <Form.Item 
-                        className="signup_input" 
-                        name="username"
-                        rules={[
-                                { required: true, message: 'User_name is required.' },
-                            ]}
-                        >
-                        <Input
-                            placeholder="Enter your username"
-                            prefix={<UserOutlined className="site-form-item-icon" />}
-                            suffix={
-                            <Tooltip title="Extra information">
-                            <InfoCircleOutlined
-                                style={{
-                                color: 'rgba(0,0,0,.45)',
-                                }}
-                            />
-                            </Tooltip>
-                            }
-                            />
-                        </Form.Item> */}
-                    </div>
                         {/* email input  */}
                         <Form.Item 
                         className="signup_input" 
@@ -161,7 +155,7 @@ function Signup() {
                         <Form.Item
                         className="custom_login__btn">
                             <Button htmlType="submit">
-                            {loading ? <span>loading...</span> : <span>Signup</span>}
+                            {loading ? <span>loading...</span> : <span>Registration</span>}
                             </Button>
                         </Form.Item>
 
@@ -175,6 +169,7 @@ function Signup() {
                 <p>Already you have an account Please! <Link to="/login">Login</Link></p>
             </div>
         </div>
+        <ToastContainer/>
     </div>
   )
 }

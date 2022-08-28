@@ -34,7 +34,7 @@ function EditTeacherProfile() {
   return (
     <div className='main-content bg-slate-50 h-screen overflow-auto'>
         <div className='body-content p-10'>
-            <NavLink to='/teacher_profile' className='pb-2 px-4 border-b'>Back</NavLink>
+            <NavLink to='/profile' className='pb-2 px-4 border-b'>Back</NavLink>
             <div className='mt-20'>
             <Form {...layout}  className='grid grid-flow-row grid-cols-3' name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                 <Form.Item

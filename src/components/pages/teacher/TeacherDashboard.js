@@ -1,103 +1,36 @@
 import React from 'react'
+import {DollarCircleFilled} from '@ant-design/icons';
+import { ImBook } from "react-icons/im";
+import { FaGraduationCap } from "react-icons/fa";
+import AcceptProblems from './AcceptProblems';
 
 const TeacherDashboard = () => {
   return (
     <div className='main-content bg-slate-50'>
         <div className='body_content'>
-            <div className='grid grid-flow-row grid-cols-3 gap-6 mb-6'>
-                <div className='bg-white shadow-sm p-10 rounded-2xl'>
-                    
+            <div className='grid grid-flow-row grid-cols-3 gap-6 mb-20'>
+                <div className='card_bg text-center'>
+                    <span className='text-[26px] text-gray-500 flex justify-center'><ImBook/></span>
+                    <h2 className='text-gray-400'>Total Course</h2>
+                    <span className='text-[18px]'>+07</span>
                 </div>
-                <div></div>
-                <div></div>
-            </div>
-            <div className='grid grid-flow-row grid-cols-2 gap-6'>
-                <div className='bg-white shadow-sm p-10 rounded-2xl'>
-                    <h2>Timetable</h2>
-                    <div className='h-[300px] overflow-auto w-full pr-2'>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mb-6'>
-                            <div className='border-l pl-4'>
-                                <h4>Rakib Hasan</h4>
-                                <span>#sub_name</span>
-                            </div>
-                            <div className='text-center'>
-                                <span>10:00 am</span> <br></br>
-                                <small className=' uppercase px-1 bg-yellow-100 rounded-xl'>Assignment</small>
-                            </div>
-                        </div>
-                    </div>
+                <div className='card_bg text-center'>
+                    <span className='text-[26px] text-gray-500 flex justify-center'><FaGraduationCap/></span>
+                    <h2 className='text-gray-400'>Total Student</h2>
+                    <span className='text-[18px]'>+122</span>
+                </div>
+                <div className='card_bg text-center'>
+                    <span className='text-[26px] text-gray-500'><DollarCircleFilled /></span>
+                    <h2 className='text-gray-400'>Available Balance</h2>
+                    <b className='text-[18px]'>$ 564</b>
                 </div>
             </div>
+           <div>
+           <h1 className='border-t border-b py-4 pl-6 text-[22px] font-semibold'>Accepted Request ::</h1>
+            <div className='grid grid-flow-row grid-cols-2 mt-10'>
+                    <AcceptProblems/>
+                </div>
+           </div>
         </div>
     </div>
   )

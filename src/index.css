@@ -50,5 +50,24 @@
  @apply w-full h-full bg-white shadow-sm rounded-2xl p-6
 }
 
+th{
+  padding: 20px 10px;
+  position: sticky;
+  top: 0;
+  background: #C4B5FD;
+}
+td{
+  padding: 10px 10px;
+}
+.height{
+  height: calc(100vh - 50px);
+}
+.message__body{padding:30px; padding-top:60px; padding-bottom: 50px;}
+.message__body li{
+  margin-bottom: 16px;
+  list-style: none;
+  text-align: right;
+}
+
 
 }
