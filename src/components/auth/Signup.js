@@ -4,7 +4,7 @@ import 'antd/dist/antd.min.css'
 import '../css/signup_input.css'
 import { Tabs, Input, Button, Form  } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined } from '@ant-design/icons';
 import LoginBG from '../../assets/img/login_bg.jpg'
 import {Link, useNavigate,} from 'react-router-dom'
 import TeacherSignup from './TeacherSignup';
@@ -34,7 +34,7 @@ function Signup() {
         }
         // console.log('Success:', values);
         setLoading(false)
-   await axios.post('http://127.0.0.1:8000/api/studentregister', values)
+   await axios.post('http://localhost:8000/api/studentregister', values)
        .then((res) => {
         setLoading(true)
         toast.success('Successfull Registaction! plz login', {
@@ -53,7 +53,7 @@ function Signup() {
        .catch((err) => {
             console.log(err);
             setLoading(false)
-            toast.error('Email is already exists', {
+            toast.error((err.message), {
                 position: "bottom-right",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -117,6 +117,7 @@ function Signup() {
                         name='password'
                         rules={[
                             { required: true, message: 'Enter your password' },
+                            { min: 4, message: 'password must be minimum 4 characters.' },
                             ]}
                         >
                             <Input.Password
@@ -155,7 +156,7 @@ function Signup() {
                         <Form.Item
                         className="custom_login__btn">
                             <Button htmlType="submit">
-                            {loading ? <span>loading...</span> : <span>Registration</span>}
+                            {loading ? <span><LoadingOutlined /></span> : <span>Registration</span>}
                             </Button>
                         </Form.Item>
 

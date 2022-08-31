@@ -47,9 +47,8 @@
   @apply mb-3
 }
 .card_bg{
- @apply w-full h-full bg-white shadow-sm rounded-2xl p-6
+ @apply w-full h-full bg-white shadow-sm rounded-2xl p-4
 }
-
 th{
   padding: 20px 10px;
   position: sticky;
@@ -58,6 +57,11 @@ th{
 }
 td{
   padding: 10px 10px;
+}
+.pagination_style{
+  margin: 30px 0 !important;
+  text-align: right !important;
+  padding-right: 40px !important;
 }
 .height{
   height: calc(100vh - 50px);

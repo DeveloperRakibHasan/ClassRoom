@@ -3,22 +3,47 @@ import book from '../../../assets/img/book.jfif'
 import LinesEllipsis from 'react-lines-ellipsis'
 import AuthUser from '../../auth/AuthUser'
 import {Link, useNavigate} from 'react-router-dom'
+import {CheckOutlined, EyeFilled} from '@ant-design/icons'
+import moment from 'moment';
+import { Pagination } from 'antd';
+import '../../css/pagination.css'
+
 
 function Timeline() {
+  const usr = JSON.parse(localStorage.getItem('user'));
   const {httpurl} = AuthUser();
   const [problems, setProblems] = useState([]);
-  const usr = JSON.parse(localStorage.getItem('user'));
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
   const history = useNavigate();
 
+  // get all problems 
   useEffect(()=>{
-    httpurl.get('problems')
+    httpurl.get('allproblems')
     .then(res=>{
-      setProblems(res.data)
+        setProblems(res.data.data)
+        setPage(res.data.current_page)
+        setPageSize(res.data.per_page)
+        console.log(res.data)
     }).catch((err)=>{
       console.log(err);
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+
+  // accepted problems 
+ function acceptedRequest(id) {
+  httpurl.put(`changeStatus/${id}`)
+  .then((res)=>{
+    // console.log(res.data);
+  }).catch((err)=>{
+    // console.log(err);
+  })
+ }
+
+ // Pagination HandelChange
+
 
   return (
   (
@@ -40,10 +65,11 @@ function Timeline() {
                     <tbody className='text-left pt-20 p-10'>
                      {
                       problems.map((elem)=>{
+                          // console.log(elem.id)
                         return(
-                    <tr className='border-b' key={elem.id}>
+                    <tr className='border-b mb-1 bg-white' key={elem.id}>
                      <td><img className='w-20 h-10' src={book} alt='img' /></td>
-                      <td>{elem.subject}</td>
+                      <td className=' uppercase'>{elem.subject}</td>
                       <td>{elem.title}</td>
                       <td> 
                         <LinesEllipsis
@@ -56,8 +82,9 @@ function Timeline() {
                       </td>
                       <td className='text-gray-400'>{elem.date ? elem.date : "no time"}</td>
                       <td className='flex gap-4 items-center'>
-                        <Link to='/timeline/1' className='py-1 px-3 bg-yellow-400 text-white rounded-lg'>View</Link>
-                        <button className='py-1 px-3 bg-green-400 text-white rounded-lg'>Accept</button>
+                        <Link title='View' to='/timeline/1' className='py-1 px-3 bg-yellow-400 text-white rounded-lg hover:text-white'><EyeFilled /></Link>
+                        <button id={elem.id} onClick={()=>acceptedRequest(elem.id)} value={elem.id} title='Accept' className='py-1 px-3 bg-green-400 text-white rounded-lg'><CheckOutlined /></button>
+                        <span className='text-gray-300'>{moment().startOf('D').fromNow()}</span>
                       </td>
                      </tr>
                         )
@@ -65,11 +92,25 @@ function Timeline() {
                      }
                   </tbody>
               </table>
+                <div className='page__pagination'>
+                    <Pagination
+                        defaultCurrent={1}
+                        current={page}
+                        defaultPageSize={12}
+                        pageSize={pageSize}
+                        total={50}
+                        showSizeChanger={true}
+                        onChange={(page, pageSize) =>{
+                            setPage(page)
+                            setPageSize(pageSize)
+                        }}
+                         />
+                </div>
           </div>
         </div>
     </div>
     :
-    history('/*')
+    history('*')
   )
     
   )

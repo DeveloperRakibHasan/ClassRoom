@@ -4,21 +4,29 @@ import '../css/class_request.css'
 import AuthUser from '../auth/AuthUser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from "moment";
 
 function AddClass() {
     const {httpurl} = AuthUser();
 
     const onFinish = async (value) => {
+        const date = moment(value.date).format('DD/MM/YYYY');
+        const time = moment(value.start_time).format('HH:MM');
+        const endTime = moment(value.end_time).format('HH:MM');
+
+        // console.log(date)
         value = {
             subject: value.subject,
             title: value.title,
             description: value.description,
-            date: value.date,
-            status: 0,
+            date: date,
+            start_time: time,
+            end_time: endTime,
         }
+        console.log(value)
         httpurl.post('problems', value)
         .then((res) => {
-            toast.success('Successfull Create.', {
+            toast.success('Successfully Create.', {
                 position: "bottom-right",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -26,6 +34,9 @@ function AddClass() {
                 draggable: true,
                 progress: undefined,
             });
+            setTimeout(()=>{
+                setShowModal(false)
+            }, 2000)
         })
         .catch((err) => {
             toast.error('OOps! No create request', {
@@ -77,8 +88,8 @@ function AddClass() {
             <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div
                     className="fixed inset-0 w-full h-full bg-black opacity-40"
-                    onClick={() => setShowModal(false)}
-                ></div>
+                    onClick={() => setShowModal(false)}>
+                </div>
                 <div className="flex items-center min-h-screen px-4 py-8">
                     <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
                         <div className="mt-3 sm:flex">
@@ -107,31 +118,35 @@ function AddClass() {
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item  name='date' 
+                                <Form.Item  name='date'
                                 rules={[
                                     {
                                         required: true,
                                         message: 'select date!',
                                     },
                                     ]}>
-                                    <DatePicker className='custom_datepiker' />
+                                    <DatePicker format='DD/MM/YYYY' showTime={false} className='custom_datepiker' />
                                 </Form.Item>
-                                <Form.Item name="time-picker">
-                                    <TimePicker />
+
+                                <Form.Item name="start_time">
+                                    <TimePicker format='HH:mm' showNow={false} placeholder='start time' />
                                 </Form.Item>
-                                </div>
-                                <div className='mb-4'>
-                                    <Form.Item name='title' 
-                                    rules={[
-                                    {
-                                        required: true,
-                                        message: 'type your title!',
-                                    },
-                                    ]}>
+
+                                    <Form.Item name="end_time">
+                                        <TimePicker format="HH:mm" showNow={false} placeholder='end time' />
+                                    </Form.Item>
+
+                                    <Form.Item className='col-span-2' name='title'
+                                               rules={[
+                                                   {
+                                                       required: true,
+                                                       message: 'type your title!',
+                                                   },
+                                               ]}>
                                         <Input name='title' placeholder="Title" />
                                     </Form.Item>
-                                </div>
 
+                                </div>
                                 <Form.Item name='description'>
                                 <Input.TextArea placeholder="Description.."  style={{
                                     resize: "none",

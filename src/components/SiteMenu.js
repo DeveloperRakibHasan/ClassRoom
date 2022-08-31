@@ -36,7 +36,7 @@ function SiteMenu({roll}) {
       icon: <WechatFilled />,
     },
     {
-      'roll': ['student'],
+      'roll': ['student', 'teacher'],
       'name': 'Calender',
       'to': '/calender',
       icon: <CalendarFilled />,

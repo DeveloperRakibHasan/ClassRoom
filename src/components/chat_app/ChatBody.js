@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import profileIMG from '../../assets/img/profile.jpg'
 import {PhoneFilled, VideoCameraFilled, SendOutlined} from '@ant-design/icons'
 import { IoIosAddCircle } from "react-icons/io";
 
 const ChatBody = () => {
+  const [item, setItem] = useState([]);
+  function handelClick(e){
+    const value = e.target.value
+    setItem([...item, value])
+    e.target.value = ''
+  }
 
   return (
     <div className='main-content flex'>
@@ -20,17 +26,25 @@ const ChatBody = () => {
           </div>
           <div className='message__body h-full overflow-auto'>
             <li>hi</li>
+            {
+              item.map((elem, index)=>(
+                <li key={index}>{elem}</li>
+              ))
+            }
+            <li></li>
           </div>
           <div className='footer__item absolute bottom-0 w-full h-14 bg-violet-300'>
             <div className='w-8/12 mx-auto flex items-center'>
               <span className='p-2 mr-2 rounded-full bg-violet-400'>
               <IoIosAddCircle />
               </span>
+
               <input 
               className='w-full focus:outline-none bg-violet-200 py-4 px-2' 
               name='message'
               placeholder='type your message...' />
-              <button className='py-[17px] px-10 bg-violet-600'><SendOutlined/></button>
+
+              <button onClick={handelClick} className='py-[17px] px-10 bg-violet-600'><SendOutlined/></button>
             </div>
           </div>
         </div>

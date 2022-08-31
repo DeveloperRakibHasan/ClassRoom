@@ -3,7 +3,9 @@ import { Input, Button, Form } from 'antd';
 import {  UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate} from 'react-router-dom'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined } from '@ant-design/icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
   
 
@@ -19,17 +21,35 @@ function TeacherSignup() {
             password: values.password,
             confirmPassword: values.confirmPassword,
         }
-        console.log('Success:', values);
+        // console.log('Success:', values);
+        setLoading(false)
+    await axios.post('http://127.0.0.1:8000/api/teacherregister', values)
+       .then((res)=>{
+        setLoading(true)
+        toast.success('Successfull Registaction! plz login', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+        
+         setTimeout(()=>{
+            history('/login')
+         }, 2000)
 
-       const res = await axios.post('http://127.0.0.1:8000/api/teacherregister', values)
-        if(res.data.status === 401) {
-            console.log(values);
-            setLoading(false);
-        } else {
-            
-            history('/teacher_dashboard')
-            setLoading(true);
-        }
+       }).catch((err)=>{
+        toast.error((err.message), {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+        
+       })
         
       };
     
@@ -80,6 +100,7 @@ function TeacherSignup() {
         name='password'
         rules={[
             { required: true, message: 'Enter your password' },
+            { min: 4, message: 'password must be minimum 4 characters.' },
             ]}
         >
             <Input.Password
@@ -118,10 +139,11 @@ function TeacherSignup() {
         <Form.Item
         className="custom_login__btn">
             <Button htmlType="submit">
-            {loading ? <span>loading...</span> : <span>Registration</span>}
+            {loading ? <span><LoadingOutlined /></span> : <span>Registration</span>}
             </Button>
         </Form.Item>
         </Form>
+        <ToastContainer/>
     </div>
   )
 }
