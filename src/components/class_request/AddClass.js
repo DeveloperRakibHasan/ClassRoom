@@ -10,7 +10,7 @@ function AddClass() {
     const {httpurl} = AuthUser();
 
     const onFinish = async (value) => {
-        const date = moment(value.date).format('DD/MM/YYYY');
+        const date = moment(value.date).format('YYYY-MM-DD');
         const time = moment(value.start_time).format('HH:MM');
         const endTime = moment(value.end_time).format('HH:MM');
 
