@@ -1,0 +1,6 @@
+.ant-table-placeholder{
+    height: calc(100vh - 50px);
+}
+.ant-pagination{
+    margin-right: 40px !important;
+}
