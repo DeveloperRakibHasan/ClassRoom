@@ -16,8 +16,8 @@ function Timeline() {
   const usr = JSON.parse(localStorage.getItem('user'));
   const {httpurl} = AuthUser();
   const [problems, setProblems] = useState([]);
-  const [loading, setLoading] = useState(false)
-  const [totalPage, setTotalPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const [totalPage, setTotalPage] = useState(1);
 
   const dispatch = useDispatch()
 
@@ -29,12 +29,11 @@ function Timeline() {
 
     const getRecords = (page) => {
     setLoading(true)
-    httpurl.get(`http://127.0.0.1:8000/api/allproblems?page=${page}`)
+    httpurl.get(`/allproblems?page=${page}`)
     .then(res=>{
         setProblems(res.data.data)
         setLoading(false)
         setTotalPage(res.data.total)
-        console.log(res.data)
         }).catch((err)=>{
         console.log(err);
         setLoading(false)
@@ -52,9 +51,10 @@ function Timeline() {
   })
 
      // calender Event
-     httpurl.get(`calendaradd/${id}`)
+     httpurl.get('accepted_problem')
          .then((res)=>{
              dispatch(addEvents(res.data));
+             console.log(res)
          }).catch((err)=>{
          console.log(err)
      })

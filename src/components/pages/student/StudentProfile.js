@@ -68,6 +68,7 @@ const StudentProfile = () => {
       gender: values.user.gender,
       address: values.user.address,
     }
+    console.log(values)
     // console.log(values)
     httpurl.post('studentUpdate', values)
         .then((res)=>{
@@ -184,8 +185,7 @@ const StudentProfile = () => {
                                               </Select>
                                             </Form.Item>
 
-                                          <Form.Item
-                                            name={['user', 'institute']}>
+                                          <Form.Item name={['user', 'institute']}>
                                             <Input className='teacher_profile_edit' placeholder='type your Institute' />
                                           </Form.Item>
 
@@ -207,19 +207,6 @@ const StudentProfile = () => {
                                               <Input className='teacher_profile_edit' placeholder='type your address' />
                                             </Form.Item>
 
-                                          {/*<Form.Item*/}
-                                          {/*  name={['user', 'age']}*/}
-                                          {/*  label="Age"*/}
-                                          {/*  rules={[*/}
-                                          {/*    {*/}
-                                          {/*      type: 'number',*/}
-                                          {/*      min: 6,*/}
-                                          {/*      max: 99,*/}
-                                          {/*    },*/}
-                                          {/*  ]}*/}
-                                          {/*>*/}
-                                          {/*  <InputNumber />*/}
-                                          {/*</Form.Item>*/}
                                           </div>
                                           <div className='flex w-full justify-center'>
                                           <Form.Item>

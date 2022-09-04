@@ -1,17 +1,103 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import AddClass from '../../class_request/AddClass'
 import '../../css/side_menu.css'
 import '../../css/searchicon.css'
 import TeacherDashboard from '../teacher/TeacherDashboard'
-import img from '../../../assets/img/book.jfif'
+// import img from '../../../assets/img/book.jfif'
+import { Table } from 'antd';
+import AuthUser from "../../auth/AuthUser";
+import book from "../../../assets/img/book.jfif";
+import LinesEllipsis from "react-lines-ellipsis";
 
 const DashBoard = () => {
-  const usr = JSON.parse(localStorage.getItem('user'));
-  return (
+    const {httpurl} = AuthUser()
+    const [requestData, setRequestData] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [totalPage, setTotalPage] = useState(1)
+    const usr = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        getRequest(1)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
+    const getRequest = (page) => {
+        setLoading(true)
+        httpurl.get(`requested_problem?page=${page}`)
+            .then((res)=>{
+                setRequestData(res.data.data)
+                setTotalPage(res.data.total)
+                setLoading(false)
+                // console.log(res.data)
+            }).catch((err)=>{
+            setLoading(false)
+            console.log(err);
+        })
+    }
+
+    // Pagination HandelChange
+    const columns = [
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            key: 'image',
+        },
+        {
+            title: 'Subject',
+            dataIndex: 'subject',
+            key: 'subject',
+        },
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Description',
+            key: 'description',
+            dataIndex: 'description',
+        },
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+        },
+    ];
+
+    let data =
+        requestData.map(item => ({
+            key: item.id,
+            image:<img className='w-20 h-14' src={book} alt='img' />,
+            subject: item.subject,
+            title:<LinesEllipsis
+                text={item.title}
+                maxLine='1'
+                ellipsis='...'
+                basedOn='letters'
+                className='mb-3'
+            />,
+            description:<LinesEllipsis
+                text={item.description}
+                maxLine='1'
+                ellipsis='...'
+                basedOn='letters'
+                className='mb-3'
+            />,
+            date: item.date,
+            status: item.status === 0 ? <span className='bg-yellow-100 py-1 px-3 rounded-xl text-gray-400'>pending..</span>:<span className='bg-green-100 py-1 px-3 rounded-xl text-gray-400'>Accepted</span>,
+        }))
+
+
+    return (
         <>
         {
           usr.type === 'student' ? 
-          <div className='main-content bg-slate-50 h-screen'>
+          <div className='main-content bg-slate-50 h-full'>
           <div className='body_content'>
             <div className='grid grid-flow-row grid-cols-3 gap-6'>
               <div className='card_bg flex justify-center items-center'>
@@ -26,25 +112,20 @@ const DashBoard = () => {
                 <span>Teachers</span>
               </div>
             </div>
-            <div className='grid grid-flow-row grid-cols-2 gap-6 mt-20'>
-              <div className='card_bg p-6'>
-                <div className='flex justify-between'>
-                  <b className='pl-4 text-gray-400'>Md Rakib</b>
-                  <span className='text-gray-300'>9 min ago..</span>
-                </div>
-               <div className='mt-3'>
-                <h4 className='text-[18px] mb-0'>Title text</h4>
-                <p className='text-gray-400'>Description text here. Description text here Description text here Description text here. Description text here Description text here..</p>
-               </div>
-               <div className='flex justify-between items-center'>
-                <img className='w-20 h-auto ' src={img} alt='' />
-                <div>
-                  <span className='px-4 py-1 bg-yellow-100 text-gray-500 rounded-xl'>pending</span>
-                  {/* <span className='px-4 py-1 bg-green-200 text-gray-500 rounded-xl'>accepted</span> */}
-                </div>
-               </div>
+              <div className='w-full h-full mt-20'>
+                  <Table
+                      loading={loading}
+                      columns={columns}
+                      dataSource={data}
+                      pagination={{
+                          pageSize: 12,
+                          total: totalPage,
+                          onChange: (page) => {
+                              getRequest(page)
+                          }
+                      }}
+                  />
               </div>
-            </div>
           </div>
         </div>
         :

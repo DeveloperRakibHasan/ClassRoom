@@ -10,6 +10,7 @@ import DashBoard from './components/pages/student/DashBoard';
 import Signup from './components/auth/Signup';
 import Chat from './components/pages/student/Chat';
 import Calender from './components/pages/student/Calender';
+import TCalender from './components/pages/teacher/TCalender';
 import EditTeacherProfile from './components/pages/teacher/EditTeacherProfile';
 import Timeline from './components/pages/teacher/Timeline';
 import PrivetRoute from './components/auth/PrivetRoute';
@@ -29,6 +30,7 @@ function App() {
           <Route path="profile" element={<Profile/>}/>
           <Route path="/chat" element={<Chat />}/>
           <Route path="/calender" element={<Calender />}/>
+          <Route path="/teacher_calender" element={<TCalender />}/>
           <Route path="/edit_teacher_profile" element={<EditTeacherProfile />}/>
           <Route path="/timeline" element={<Timeline />}/>
           <Route path="timeline/1" element={<SingleProblem/>}/>

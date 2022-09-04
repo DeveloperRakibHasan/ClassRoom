@@ -5,6 +5,12 @@ import AuthUser from '../auth/AuthUser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
+import PaymentForm from "./PaymentForm";
+
+const PUBLIC_KEY = "pk_test_51LdzDOE67cQ6UeN0eN1h9gdxcaw2RDunHYJHx7WmfF0GP4X7oQ74dHi5khNrLM1uB5tYtgmGNuwKq0a4GCABdmCG00NUSMgDPh"
+const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 function AddClass() {
     const {httpurl} = AuthUser();
@@ -22,6 +28,7 @@ function AddClass() {
             date: date,
             start_time: time,
             end_time: endTime,
+            image: value.image,
         }
         console.log(value)
         httpurl.post('problems', value)
@@ -63,16 +70,16 @@ function AddClass() {
 
     const onPreview = async (file) => {
         let src = file.url;
-    
+
         if (!src) {
           src = await new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file.originFileObj);
-    
+
             reader.onload = () => resolve(reader.result);
           });
         }
-    
+
         const image = new Image();
         image.src = src;
         const imgWindow = window.open(src);
@@ -93,18 +100,18 @@ function AddClass() {
                 <div className="flex items-center min-h-screen px-4 py-8">
                     <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
                         <div className="mt-3 sm:flex">
-                            
                             <div className="mt-2 text-center sm:ml-4 sm:text-left">
                                 <h4 className="text-lg font-medium text-gray-800">
                                    ClassRoom Request
                                 </h4>
 
-                                <Form 
+                                <Form
                                 onFinish={onFinish}
                                 onFinishFailed={onFinishFailed}
+                                encType='multipart/form-data'
                                 >
                                 <div className='w-full grid grid-flow-row grid-cols-3 gap-4 mb-4'>
-                                <Form.Item name='subject' 
+                                <Form.Item name='subject'
                                 rules={[
                                     {
                                         required: true,
@@ -163,13 +170,18 @@ function AddClass() {
                                     fileList={fileList}
                                     onChange={onChange}
                                     onPreview={onPreview}>
-                                    {fileList.length < 2 && '+ Upload'}
+                                    {fileList.length < 1 && '+ Upload'}
                                     </Upload>
                                 </Form.Item>
                                </div>
-
+                                <div className='pb-4'>
+                                    <b>Add Payment:</b>
+                                   <Elements stripe={stripeTestPromise}>
+                                       <PaymentForm />
+                                   </Elements>
+                                </div>
                                 <div className="justify-center gap-2 mt-3 flex">
-                                   <div> 
+                                   <div>
                                    <button
                                         className="py-1 px-3 flex-1 text-white rounded-sm bg-red-500 outline-none border"
                                         onClick={() => setShowModal(false)}>
@@ -182,7 +194,7 @@ function AddClass() {
                                         Post
                                     </Button>
                                     </Form.Item>
-                                   </div> 
+                                   </div>
                                 </div>
                                 </Form>
                                 <ToastContainer/>

@@ -6,6 +6,8 @@
     "@fullcalendar/daygrid": "^5.11.2",
     "@fullcalendar/react": "^5.11.2",
     "@reduxjs/toolkit": "^1.8.5",
+    "@stripe/react-stripe-js": "^1.10.0",
+    "@stripe/stripe-js": "^1.35.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
