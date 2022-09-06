@@ -13,11 +13,12 @@ function Calender() {
     // const events = useSelector(getAllEvent);
     const [isModalOpen, setIsModalVOpen] = useState(false);
     const [addEvent, setAddEvent] = useState([]);
-    // const date = events.date
+    const [eventData, setEventData] = useState({});
 
 
-    const showModal = () => {
+    function showModal(event) {
         setIsModalVOpen(true);
+        setEventData(event.event)
     };
 
     const handleOk = () => {
@@ -41,10 +42,11 @@ function Calender() {
     }, []);
 
     const even = addEvent.map(item => ({
+        id: item.id,
         title: item.subject,
         start: item.date,
-        time: '12:20',
-        timeZone: 'local',
+        minTime: item.start_time,
+        maxTime: item.end_time,
     }))
 
   return (
@@ -60,20 +62,15 @@ function Calender() {
                               plugins={[ dayGridPlugin ]}
                               initialView="dayGridMonth"
                               selectable
-                              eventClick={showModal}
+                              eventClick={(event)=>showModal(event)}
                           />
 
                           <>
-                              {
-                                  addEvent.map((el)=>{
-                                      return (
-                                          <Modal title="Event" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} key={el.id}>
-                                              <b>{el.title}</b>
-                                              <p>{el.date}</p>
-                                              <p><span>{el.start_time}</span> - {el.end_time} </p>
-                                          </Modal>)
-                                  })
-                              }
+                          <Modal id={eventData.id} title="Event" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} key={addEvent.id}>
+                              <b className='uppercase'>{eventData.title}</b>
+                              <p>{eventData.startStr}</p>
+                              {/*<p><span>{eventData.start_time}</span> - {eventData.end_time} </p>*/}
+                          </Modal>
                           </>
 
                       </div>

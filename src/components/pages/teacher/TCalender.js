@@ -10,10 +10,12 @@ function TCalender() {
     const {httpurl} = AuthUser();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [event, setEvent] = useState([]);
-    // const id = event.map(e=>(e.id))
+    const [eventData, setEventData] = useState({})
 
-    const showModal = () => {
+    function showModal(event) {
         setIsModalVisible(true);
+        console.log(event.event);
+        setEventData(event.event)
     };
 
     const handleOk = () => {
@@ -36,10 +38,11 @@ function TCalender() {
     }, []);
 
     const even = event.map(item => ({
+        id: item.id,
         title: item.subject,
         start: item.date,
-        time: '12:20',
-        timeZone: 'local',
+        minTime: item.start_time,
+        maxTime: item.end_time,
     }))
 
   return (
@@ -52,21 +55,14 @@ function TCalender() {
               events={even}
               plugins={[ dayGridPlugin ]}
               initialView="dayGridMonth"
-              eventClick={showModal}
-
+              eventClick={(event)=>showModal(event)}
               />
                 <>
-                    {
-                        event.map((el)=>{
-                            console.log(el.id)
-                           return (
-                           <Modal title="Event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} key={el.id}>
-                               <b>{el.title}</b>
-                               <p>{el.date}</p>
-                               <p><span>{el.start_time}</span> - {el.end_time} </p>
-                            </Modal>)
-                        })
-                    }
+                <Modal id={eventData.id} key={event.id} title="Event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                    <b className='uppercase'>{eventData.title}</b>
+                    <p>{eventData.startStr}</p>
+                    {/*<p><span>{eventData.extendedProps.minTime}</span> - {eventData.extendedProps.maxTime} </p>*/}
+                </Modal>
                 </>
 
               </div>

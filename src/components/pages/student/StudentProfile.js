@@ -68,8 +68,7 @@ const StudentProfile = () => {
       gender: values.user.gender,
       address: values.user.address,
     }
-    console.log(values)
-    // console.log(values)
+
     httpurl.post('studentUpdate', values)
         .then((res)=>{
           toast.success((res.data.message), {

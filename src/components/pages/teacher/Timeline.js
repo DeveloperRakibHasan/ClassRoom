@@ -27,6 +27,7 @@ function Timeline() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+    // get all problems
     const getRecords = (page) => {
     setLoading(true)
     httpurl.get(`/allproblems?page=${page}`)

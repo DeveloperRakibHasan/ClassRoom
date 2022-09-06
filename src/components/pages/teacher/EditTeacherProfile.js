@@ -46,6 +46,7 @@ function EditTeacherProfile() {
           // birth_of_date: values.user.birth_of_date,
 
         }
+
       httpurl.post('teacherUpdate', values)
       .then((res)=>{
         // console.log(res);

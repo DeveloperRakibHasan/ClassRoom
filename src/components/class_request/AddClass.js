@@ -1,38 +1,53 @@
 import React, {useState} from 'react'
-import { Input,  DatePicker, Select, Form, Upload, TimePicker, Button } from 'antd';
+import { Input,  DatePicker, Select, Form, TimePicker, Button } from 'antd';
 import '../css/class_request.css'
 import AuthUser from '../auth/AuthUser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
-import {loadStripe} from "@stripe/stripe-js";
-import {Elements} from "@stripe/react-stripe-js";
-import PaymentForm from "./PaymentForm";
+// import {loadStripe} from "@stripe/stripe-js";
+// import {Elements} from "@stripe/react-stripe-js";
+// import PaymentForm from "./PaymentForm";
 
-const PUBLIC_KEY = "pk_test_51LdzDOE67cQ6UeN0eN1h9gdxcaw2RDunHYJHx7WmfF0GP4X7oQ74dHi5khNrLM1uB5tYtgmGNuwKq0a4GCABdmCG00NUSMgDPh"
-const stripeTestPromise = loadStripe(PUBLIC_KEY)
+// const PUBLIC_KEY = "pk_test_51LeZ8lIjJ99XMEQZGq0nQNnwJSZJ1f4I5zFf2xrco5Qpm6j5jyXfCz0UgQcTchGhFQciVShlo0ogcfKNNjkakPiL00j3hyDMvG"
+// const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 function AddClass() {
     const {httpurl} = AuthUser();
+    const [image, setImage] = useState('')
+
+   const fileSelectHandler = (event) =>{
+       setImage(event.target.files[0])
+    }
 
     const onFinish = async (value) => {
         const date = moment(value.date).format('YYYY-MM-DD');
         const time = moment(value.start_time).format('HH:MM');
         const endTime = moment(value.end_time).format('HH:MM');
 
+        const img = new FormData();
+        img.append('image', image);
+        img.append('subject', value.subject);
+        img.append('title', value.title);
+        img.append('description', value.description);
+        img.append('date', date);
+        img.append('start_time', time);
+        img.append('end_time', endTime);
+
         // console.log(date)
-        value = {
-            subject: value.subject,
-            title: value.title,
-            description: value.description,
-            date: date,
-            start_time: time,
-            end_time: endTime,
-            image: value.image,
-        }
+        // value = {
+        //     subject: value.subject,
+        //     title: value.title,
+        //     description: value.description,
+        //     date: date,
+        //     start_time: time,
+        //     end_time: endTime,
+        //     image: image.name,
+        // }
         console.log(value)
-        httpurl.post('problems', value)
+        httpurl.post('problems', img)
         .then((res) => {
+            console.log(res)
             toast.success('Successfully Create.', {
                 position: "bottom-right",
                 autoClose: 1000,
@@ -57,34 +72,34 @@ function AddClass() {
         })
         // console.log(value)
       };
-    
+
       const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
       };
     
-    const [fileList, setFileList] = useState([]);
-
-    const onChange = ({ fileList: newFileList }) => {
-      setFileList(newFileList);
-    };
-
-    const onPreview = async (file) => {
-        let src = file.url;
-
-        if (!src) {
-          src = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file.originFileObj);
-
-            reader.onload = () => resolve(reader.result);
-          });
-        }
-
-        const image = new Image();
-        image.src = src;
-        const imgWindow = window.open(src);
-        imgWindow?.document.write(image.outerHTML);
-      };
+    // const [fileList, setFileList] = useState([]);
+    //
+    // const onChange = ({ fileList: newFileList }) => {
+    //   setFileList(newFileList);
+    // };
+    //
+    // const onPreview = async (file) => {
+    //     let src = file.url;
+    //
+    //     if (!src) {
+    //       src = await new Promise((resolve) => {
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file.originFileObj);
+    //
+    //         reader.onload = () => resolve(reader.result);
+    //       });
+    //     }
+    //
+    //     const image = new Image();
+    //     image.src = src;
+    //     const imgWindow = window.open(src);
+    //     imgWindow?.document.write(image.outerHTML);
+    //   };
 
     const [showModal, setShowModal] = useState(false);
   return (
@@ -163,23 +178,32 @@ function AddClass() {
                                 </Form.Item>
 
                                <div className='mt-6'>
-                               <Form.Item label="Upload" valuePropName="fileList">
-                               <Upload
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card"
-                                    fileList={fileList}
-                                    onChange={onChange}
-                                    onPreview={onPreview}>
-                                    {fileList.length < 1 && '+ Upload'}
-                                    </Upload>
-                                </Form.Item>
+                               {/*<Form.Item label="Upload" valuePropName="fileList">*/}
+                               {/*<Upload*/}
+                               {/*     action={"http://127.0.0.1:8000"}*/}
+                               {/*     // listType="picture"*/}
+                               {/*     // accept={".png,.jpg,.jpeg"}*/}
+                               {/*     beforeUpload={(file)=>{*/}
+                               {/*         console.log({file})*/}
+                               {/*         setImage(file)*/}
+                               {/*         return false*/}
+                               {/*     }}*/}
+                               {/*     fileList={fileList}*/}
+                               {/*     onChange={onChange}*/}
+                               {/*     onPreview={onPreview}>*/}
+                               {/*     {fileList.length < 1 && '+ Upload'}*/}
+                               {/*     </Upload>*/}
+                               {/* </Form.Item>*/}
+
+                                   <input type='file' name='image' onChange={fileSelectHandler} />
+
                                </div>
-                                <div className='pb-4'>
-                                    <b>Add Payment:</b>
-                                   <Elements stripe={stripeTestPromise}>
-                                       <PaymentForm />
-                                   </Elements>
-                                </div>
+                                {/*<div className='pb-4'>*/}
+                                {/*    <b>Add Payment:</b>*/}
+                                {/*   <Elements stripe={stripeTestPromise}>*/}
+                                {/*       <PaymentForm />*/}
+                                {/*   </Elements>*/}
+                                {/*</div>*/}
                                 <div className="justify-center gap-2 mt-3 flex">
                                    <div>
                                    <button
@@ -205,7 +229,6 @@ function AddClass() {
             </div>
         </>
     ) : null}
-
 
 
     </div>

@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {CardElement, useElements,  useStripe} from "@stripe/react-stripe-js";
 import AuthUser from "../auth/AuthUser";
-import {PaymentMethod} from "@stripe/stripe-js";
 
 // const CARD_OPTIONS = {
 //     iconStyle: "solid",
@@ -27,28 +26,32 @@ export default function PaymentForm() {
 
     const paymentSubmit = async (e) => {
         e.preventDefault();
-        const {error, PaymentMethod} = await stripe.createPaymentMethod({
+        const {error, paymentMethod} = await stripe.createPaymentMethod({
             type: "card",
             card: elements.getElement(CardElement)
         })
-        if(!error){
+
+        if (!error) {
             try {
-                const {id} = PaymentMethod
+                // const {id} = loadStripe
+                const {id} = paymentMethod
                 const responce = httpurl.post('payment', {
                     amount: 100,
                     id
-                })
+                });
+
                 if (responce.data.success) {
                     console.log('successful payment')
                     setSuccess(true)
                 }
-            } catch (error){
-                console.log(error)
+            } catch (error) {
+                console.log('Error:', error)
             }
-        }else {
+        } else {
             console.log(error.message)
         }
     }
+
     return(
         <>
             {!success ?
