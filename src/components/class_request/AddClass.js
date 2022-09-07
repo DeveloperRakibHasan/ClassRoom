@@ -5,15 +5,11 @@ import AuthUser from '../auth/AuthUser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
-// import {loadStripe} from "@stripe/stripe-js";
-// import {Elements} from "@stripe/react-stripe-js";
-// import PaymentForm from "./PaymentForm";
 
-// const PUBLIC_KEY = "pk_test_51LeZ8lIjJ99XMEQZGq0nQNnwJSZJ1f4I5zFf2xrco5Qpm6j5jyXfCz0UgQcTchGhFQciVShlo0ogcfKNNjkakPiL00j3hyDMvG"
-// const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 function AddClass() {
     const {httpurl} = AuthUser();
+    const [showModal, setShowModal] = useState(false);
     const [image, setImage] = useState('')
 
    const fileSelectHandler = (event) =>{
@@ -25,14 +21,14 @@ function AddClass() {
         const time = moment(value.start_time).format('HH:MM');
         const endTime = moment(value.end_time).format('HH:MM');
 
-        const img = new FormData();
-        img.append('image', image);
-        img.append('subject', value.subject);
-        img.append('title', value.title);
-        img.append('description', value.description);
-        img.append('date', date);
-        img.append('start_time', time);
-        img.append('end_time', endTime);
+        const frData = new FormData();
+        frData.append('image', image);
+        frData.append('subject', value.subject);
+        frData.append('title', value.title);
+        frData.append('description', value.description);
+        frData.append('date', date);
+        frData.append('start_time', time);
+        frData.append('end_time', endTime);
 
         // console.log(date)
         // value = {
@@ -45,7 +41,7 @@ function AddClass() {
         //     image: image.name,
         // }
         console.log(value)
-        httpurl.post('problems', img)
+        httpurl.post('problems', frData)
         .then((res) => {
             console.log(res)
             toast.success('Successfully Create.', {
@@ -101,7 +97,6 @@ function AddClass() {
     //     imgWindow?.document.write(image.outerHTML);
     //   };
 
-    const [showModal, setShowModal] = useState(false);
   return (
     <div>
     <button onClick={() => setShowModal(true)}> + add class request</button>
@@ -198,12 +193,6 @@ function AddClass() {
                                    <input type='file' name='image' onChange={fileSelectHandler} />
 
                                </div>
-                                {/*<div className='pb-4'>*/}
-                                {/*    <b>Add Payment:</b>*/}
-                                {/*   <Elements stripe={stripeTestPromise}>*/}
-                                {/*       <PaymentForm />*/}
-                                {/*   </Elements>*/}
-                                {/*</div>*/}
                                 <div className="justify-center gap-2 mt-3 flex">
                                    <div>
                                    <button

@@ -8,6 +8,12 @@ import { Table } from 'antd';
 import AuthUser from "../../auth/AuthUser";
 import book from "../../../assets/img/book.jfif";
 import LinesEllipsis from "react-lines-ellipsis";
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
+import PaymentForm from "../../class_request/PaymentForm";
+
+const PUBLIC_KEY = "pk_test_51LeZ8lIjJ99XMEQZGq0nQNnwJSZJ1f4I5zFf2xrco5Qpm6j5jyXfCz0UgQcTchGhFQciVShlo0ogcfKNNjkakPiL00j3hyDMvG"
+const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
 const DashBoard = () => {
     const {httpurl} = AuthUser()
@@ -28,7 +34,6 @@ const DashBoard = () => {
                 setRequestData(res.data.data)
                 setTotalPage(res.data.total)
                 setLoading(false)
-                // console.log(res.data)
             }).catch((err)=>{
             setLoading(false)
             console.log(err);
@@ -70,7 +75,7 @@ const DashBoard = () => {
     ];
 
     let data =
-        requestData.map(item => ({
+        requestData.map((item) => ({
             key: item.id,
             image:<img className='w-20 h-14' src={book} alt='img' />,
             subject: item.subject,
@@ -99,6 +104,15 @@ const DashBoard = () => {
           usr.type === 'student' ? 
           <div className='main-content bg-slate-50 h-full'>
           <div className='body_content'>
+
+              <div className='pb-4'>
+                  <b>Add Payment:</b>
+                  <Elements stripe={stripeTestPromise} >
+                      <PaymentForm />
+                  </Elements>
+              </div>
+
+
             <div className='grid grid-flow-row grid-cols-3 gap-6'>
               <div className='card_bg flex justify-center items-center'>
                 <AddClass />
