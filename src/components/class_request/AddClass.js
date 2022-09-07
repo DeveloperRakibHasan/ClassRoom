@@ -5,12 +5,14 @@ import AuthUser from '../auth/AuthUser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
+import {useDispatch} from "react-redux";
 
 
 function AddClass() {
     const {httpurl} = AuthUser();
     const [showModal, setShowModal] = useState(false);
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('');
+    const dispatch = useDispatch();
 
    const fileSelectHandler = (event) =>{
        setImage(event.target.files[0])
@@ -43,7 +45,7 @@ function AddClass() {
         console.log(value)
         httpurl.post('problems', frData)
         .then((res) => {
-            console.log(res)
+            dispatch(res.data);
             toast.success('Successfully Create.', {
                 position: "bottom-right",
                 autoClose: 1000,

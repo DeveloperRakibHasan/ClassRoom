@@ -22,7 +22,7 @@ function TeacherSignup() {
             confirmPassword: values.confirmPassword,
         }
         // console.log('Success:', values);
-        setLoading(false)
+        setLoading(true)
     await axios.post('http://127.0.0.1:8000/api/teacherregister', values)
        .then((res)=>{
         setLoading(true)

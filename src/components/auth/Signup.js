@@ -33,7 +33,7 @@ function Signup() {
             confirmPassword: values.confirmPassword,
         }
         // console.log('Success:', values);
-        setLoading(false)
+        setLoading(true)
    await axios.post('http://localhost:8000/api/studentregister', values)
        .then((res) => {
         setLoading(true)

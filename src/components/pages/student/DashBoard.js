@@ -23,7 +23,7 @@ const DashBoard = () => {
     const usr = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
-        getRequest(1)
+        getRequest(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

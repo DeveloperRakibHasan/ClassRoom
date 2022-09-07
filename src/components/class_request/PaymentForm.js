@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {useStripe, useElements, CardElement} from "@stripe/react-stripe-js";
-import AuthUser from "../auth/AuthUser";
+// import AuthUser from "../auth/AuthUser";
 
 
 export default function PaymentForm() {
-    const {httpurl} = AuthUser();
-    const [success, setSuccess] = useState(false);
+    // const {httpurl} = AuthUser();
+    // const [success, setSuccess] = useState(false);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -13,11 +13,17 @@ export default function PaymentForm() {
     const paymentSubmit = async (event) => {
         event.preventDefault();
 
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-            type: "card",
-            card: elements.getElement(CardElement),
-        })
-        console.log(paymentMethod)
+        const cardElement = elements.getElement("card");
+
+        stripe.createToken(cardElement)
+            .then((payload) => console.log('[token]', payload));
+    };
+
+        // const {error, paymentMethod} = await stripe.createPaymentMethod({
+        //     type: "card",
+        //     card: elements.getElement(CardElement),
+        // })
+
         // if (!error) {
         //     try {
         //         const {id} = paymentMethod
@@ -36,12 +42,11 @@ export default function PaymentForm() {
         // } else {
         //     console.log(error.message)
         // }
-    }
+
 
     return(
         <>
-            {
-                !success ?
+
 
                     <form onSubmit={paymentSubmit}>
                         <fieldset>
@@ -49,9 +54,7 @@ export default function PaymentForm() {
                         </fieldset>
                         <button className='bg-green-500 text-white px-4 py-1 mt-4 mb-10'>pay</button>
                     </form>
-                    :
-                    <span>Success</span>
-            }
+
         </>
-    )
+    );
 }
